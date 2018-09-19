@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Cms\Ui\Component\Listing\Column\PageActions">
+        <plugin name="add_duplicate_cms_button_to_grid" type="MageSuite\CmsDuplicate\Plugin\AddDuplicateCmsButtonToGrid" sortOrder="10" />
+    </type>
+</config>

@@ -1,0 +1,79 @@
+<?php
+/** @var \MageSuite\CmsDuplicate\Block\Adminhtml\Duplicate\Form $block */
+$page = $block->getPage();
+?>
+<div id="duplicate-page-modal">
+    <form method="post"
+          id="duplicate-cms-page-form"
+          action="<?php echo $block->getUrl('cmspageduplicate/duplicate/duplicate') ?>">
+        <input type="hidden" name="page_id" id="page_id" value="<?php echo $page->getId() ?>"/>
+        <fieldset class="admin__fieldset">
+            <div class="admin__field admin__field-identifier">
+                <label class="admin__field-label"
+                       for="identifier"><span><?php echo __('New page identifier') ?></span></label>
+                <div class="admin__field-control">
+                    <input class="admin__control-text admin__control-text-identifier" type="text" name="identifier"
+                           id="identifier"
+                           value="<?php echo $page->getIdentifier() ?>"
+                           data-old-value="<?php echo $page->getIdentifier() ?>"
+                    >
+                    <div class="admin__field-note">
+                        <span><?php echo __('Please provide new identifier (url key) for duplicated page. New identifier must be unique and cannot be used already by any other page.') ?></span>
+                    </div>
+                </div>
+            </div>
+            <div class="admin__field">
+                <label class="admin__field-label" for="title"><span><?php echo __('New page title') ?></span></label>
+                <div class="admin__field-control">
+                    <input class="admin__control-text" type="text" name="title" id="title"
+                           value="<?php echo $page->getTitle() ?>">
+                    <div class="admin__field-note">
+                        <span><?php echo __('Please provide new title for duplicated page. Title does not have to be unique.') ?></span>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <?php $blocks = $block->getBlocksToDuplicate(); ?>
+        <?php if (!empty($blocks)): ?>
+            <h2><?php echo __('Static Blocks and Paragraphs') ?></h2>
+            <?php foreach ($blocks as $cmsBlock): ?>
+                <fieldset class="admin__fieldset">
+                    <input type="hidden" name="blockId[<?php echo $cmsBlock['componentId'] ?>]"
+                           value="<?php echo $cmsBlock['id'] ?>"/>
+                    <div class="admin__field">
+                        <label class="admin__field-label" for=""><span>Copy this block</span></label>
+                        <div class="admin__field-control">
+                            <input type="checkbox" class="admin__control-checkbox-copy" name="blockCopy[]"
+                                   value="<?php echo $cmsBlock['componentId'] ?>">
+                        </div>
+                    </div>
+                    <div class="admin__field">
+                        <label class="admin__field-label" for="">New identifier</label>
+                        <div class="admin__field-control">
+                            <input class="admin__control-text admin__control-text-identifier" type="text"
+                                   name="blockIdentifier[<?php echo $cmsBlock['componentId'] ?>]"
+                                   data-old-value="<?php echo $cmsBlock['identifier'] ?>"
+                                   value="<?php echo $cmsBlock['identifier'] ?>">
+                            <div class="admin__field-note">
+                                <span><?php echo __('Please provide new identifier for duplicated CMS block. New identifier must be unique and cannot be used already by any other CMS block.') ?></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="admin__field">
+                        <label class="admin__field-label" for="">New title</label>
+                        <div class="admin__field-control">
+                            <input class="admin__control-text admin__control-text-title" type="text"
+                                   name="blockTitle[<?php echo $cmsBlock['componentId'] ?>]"
+                                   value="<?php echo $cmsBlock['title'] ?>">
+                        </div>
+                    </div>
+                </fieldset>
+            <?php endforeach; ?>
+        <?php endif; ?>
+        <input type="hidden" name="form_key" value="<?php echo $block->getFormKey() ?>"/>
+    </form>
+</div>
+<script>
+
+</script>

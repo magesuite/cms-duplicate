@@ -1,0 +1,116 @@
+<script>
+    function openDuplicateCmsPageModal(pageId, url) {
+        require(
+            ['jquery', 'Magento_Ui/js/modal/modal'],
+            function ($, modal) {
+                var options = {
+                    type: 'slide',
+                    responsive: true,
+                    innerScroll: true,
+                    title: $.mage.__('Duplicate CMS Page'),
+                    buttons: [{
+                        text: $.mage.__('Duplicate'),
+                        class: 'action-primary',
+                        click: function () {
+                            resetValidationErrors($);
+
+                            if (!validateDuplicateCmsPageForm($)) {
+                                return;
+                            }
+
+                            $.post({
+                                showLoader: true,
+                                url: $("#duplicate-cms-page-form").attr('action'),
+                                data: $("#duplicate-cms-page-form").serialize(),
+                                success: function (response) {
+                                    if (response.success) {
+                                        location.reload();
+                                        return;
+                                    }
+
+                                    $('body').notification('clear').notification('add', {
+                                        error: true,
+                                        message: response.errorMessage,
+                                        insertMethod: function (message) {
+                                            var $wrapper = $('<div/>').html(message);
+                                            $('.page-main-actions').after($wrapper);
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    }]
+                };
+
+                var formUrl = url;
+
+                $.get({
+                    url: formUrl,
+                    showLoader: true
+                }).success(
+                    function (data) {
+                        $('#duplicate-page-modal').remove();
+
+                        modal(options, data);
+
+                        $('#duplicate-page-modal').modal('openModal');
+
+                        refreshDisabledState($);
+
+                        $('.admin__control-checkbox-copy').change(function () {
+                            resetValidationErrors($);
+                            refreshDisabledState($);
+                        });
+                    }
+                );
+            }
+        );
+    }
+
+    function hasCopyCheckbox($, input) {
+        return $(input).closest('fieldset').find('.admin__control-checkbox-copy').length;
+    }
+
+    function isCopyingEnabledForBlock($, input) {
+        return $(input).closest('fieldset').find('.admin__control-checkbox-copy').prop('checked');
+    }
+
+    function validateDuplicateCmsPageForm($) {
+        var errorLabel = $.mage.__('New identifier must be different than old one.');
+
+        var result = true;
+
+        $('.admin__control-text-identifier').each(function (index, input) {
+            if (isCopyingEnabledForBlock($, input) || !hasCopyCheckbox($, input)) {
+                if ($(input).val() == $(input).data('old-value')) {
+                    result = false;
+
+                    $(input).addClass('_error');
+                    $(input).after('<label class="admin__field-error admin__field-error-identifier">' + errorLabel + '</label>');
+                }
+            }
+        });
+
+        return result;
+    }
+
+    function refreshDisabledState($) {
+        $('.admin__control-text-identifier').each(function (index, input) {
+            if (hasCopyCheckbox($, input) && !isCopyingEnabledForBlock($, input)) {
+                return setDisabledState($, input, 'disabled');
+            }
+
+            setDisabledState($, input, '');
+        });
+    }
+
+    function setDisabledState($, input, state = '') {
+        $(input).prop('disabled', state);
+        $(input).closest('fieldset').find('.admin__control-text-title').prop('disabled', state)
+    }
+
+    function resetValidationErrors($) {
+        $('.admin__field-error').remove();
+        $('.admin__field').removeClass('_error');
+    }
+</script>
