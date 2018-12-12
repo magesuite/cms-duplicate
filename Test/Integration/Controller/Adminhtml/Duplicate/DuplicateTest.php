@@ -14,10 +14,16 @@ class DuplicateTest extends \Magento\TestFramework\TestCase\AbstractBackendContr
      */
     protected $messageManager;
 
+    /**
+     * @var \Magento\Cms\Api\Data\PageInterface
+     */
+    protected $page;
+
     public function setUp()
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
         $this->messageManager = $this->objectManager->get(\Magento\Framework\Message\ManagerInterface::class);
+        $this->page = $this->objectManager->get(\Magento\Cms\Api\Data\PageInterface::class);
 
         parent::setUp();
     }
@@ -32,6 +38,7 @@ class DuplicateTest extends \Magento\TestFramework\TestCase\AbstractBackendContr
     {
         $originalFirstBlock = $this->getBlock('block_1');
 
+        $this->getRequest()->setMethod(\Magento\Framework\App\Request\Http::METHOD_POST);
         $this->getRequest()->setPostValue([
             'page_id' => $this->getOriginalPageId(),
             'identifier' => 'duplicated_page',
@@ -69,6 +76,7 @@ class DuplicateTest extends \Magento\TestFramework\TestCase\AbstractBackendContr
      */
     public function testItThrowsErrorWhenIdentifierIsTheSame()
     {
+        $this->getRequest()->setMethod(\Magento\Framework\App\Request\Http::METHOD_POST);
         $this->getRequest()->setPostValue([
             'page_id' => $this->getOriginalPageId(),
             'identifier' => 'page100',
@@ -91,6 +99,7 @@ class DuplicateTest extends \Magento\TestFramework\TestCase\AbstractBackendContr
      */
     public function testItThrowsErrorWhenOldPageDoesNotExist()
     {
+        $this->getRequest()->setMethod(\Magento\Framework\App\Request\Http::METHOD_POST);
         $this->getRequest()->setPostValue([
             'page_id' => 9999999999,
             'identifier' => 'duplicated_page',
@@ -102,7 +111,9 @@ class DuplicateTest extends \Magento\TestFramework\TestCase\AbstractBackendContr
         $content = json_decode($this->getResponse()->getBody(), true);
 
         $this->assertFalse($content['success']);
-        $this->assertContains('CMS Page with id "9999999999" does not exist', $content['errorMessage']);
+        $this->assertNotEmpty($content['errorMessage']);
+        $this->assertFalse($this->page->checkIdentifier('duplicated_page', 0));
+
     }
 
     protected function getOriginalPageId()

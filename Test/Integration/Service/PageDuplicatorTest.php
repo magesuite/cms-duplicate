@@ -74,7 +74,7 @@ class PageDuplicatorTest extends \PHPUnit\Framework\TestCase
 
             $this->fail();
         } catch (\Exception $e) {
-            $this->assertEquals('CMS Page with id "9999999999" does not exist.', $e->getMessage());
+            $this->assertNotEmpty($e->getMessage());
         }
     }
 
