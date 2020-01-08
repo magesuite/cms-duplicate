@@ -4,4 +4,3 @@
     'MageSuite_CmsDuplicate',
     __DIR__
 );
-

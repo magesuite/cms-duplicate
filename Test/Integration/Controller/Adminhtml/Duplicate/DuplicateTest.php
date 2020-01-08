@@ -113,7 +113,6 @@ class DuplicateTest extends \Magento\TestFramework\TestCase\AbstractBackendContr
         $this->assertFalse($content['success']);
         $this->assertNotEmpty($content['errorMessage']);
         $this->assertFalse($this->page->checkIdentifier('duplicated_page', 0));
-
     }
 
     protected function getOriginalPageId()
