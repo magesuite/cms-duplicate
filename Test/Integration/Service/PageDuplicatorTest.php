@@ -122,6 +122,23 @@ class PageDuplicatorTest extends \PHPUnit\Framework\TestCase
      * @magentoDbIsolation enabled
      * @magentoDataFixture loadPagesWithBlocks
      */
+    public function testNewParagraphsAreMigratedAsIs()
+    {
+        $oldPageId = $this->getOriginalPageId();
+
+        $newPage = $this->pageDuplicator->duplicate($oldPageId, 'New title', 'new_identifier');
+
+        $newPageComponents = $this->xmlToComponentConfiguration->map($newPage->getLayoutUpdateXml());
+
+        $this->assertEquals('paragraph', $newPageComponents[2]['type']);
+        $this->assertEquals('paragraph content', $newPageComponents[2]['data']['content']);
+        $this->assertEquals('1', $newPageComponents[2]['data']['migrated']);
+    }
+
+    /**
+     * @magentoDbIsolation enabled
+     * @magentoDataFixture loadPagesWithBlocks
+     */
     public function testItDuplicatesOnlyPassedBlocks()
     {
         $oldPageId = $this->getOriginalPageId();

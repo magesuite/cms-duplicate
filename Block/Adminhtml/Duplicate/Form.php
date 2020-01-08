@@ -69,6 +69,10 @@ class Form extends \Magento\Backend\Block\Template
                 continue;
             }
 
+            if($this->isMigratedParagraph($component)) {
+                continue;
+            }
+
             $blockData = $this->getBlockData($component);
 
             $blocks[] = $blockData;
@@ -93,6 +97,11 @@ class Form extends \Magento\Backend\Block\Template
             'title' => $block->getTitle(),
             'identifier' => $block->getIdentifier()
         ];
+    }
+
+    protected function isMigratedParagraph($component)
+    {
+        return $component['type'] == 'paragraph' && !isset($component['data']['blockId']);
     }
 
 }
