@@ -35,9 +35,9 @@ $page = $block->getPage();
         </fieldset>
 
         <?php $blocks = $block->getBlocksToDuplicate(); ?>
-        <?php if (!empty($blocks)): ?>
+        <?php if (!empty($blocks)) : ?>
             <h2><?php echo __('Static Blocks and Paragraphs') ?></h2>
-            <?php foreach ($blocks as $cmsBlock): ?>
+            <?php foreach ($blocks as $cmsBlock) : ?>
                 <fieldset class="admin__fieldset">
                     <input type="hidden" name="blockId[<?php echo $cmsBlock['componentId'] ?>]"
                            value="<?php echo $cmsBlock['id'] ?>"/>

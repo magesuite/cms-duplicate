@@ -44,6 +44,30 @@ $xml = $componentConfigurationToXmlMapper->map([
             'title' => 'Content 2',
         ],
     ],
+    [
+        'id' => 'componentd464',
+        'section' => 'content',
+        'type' => 'paragraph',
+        'name' => 'Paragraph',
+        'data' =>
+            [
+                'title' => '',
+                'columns' => 'none',
+                'scenarios' =>
+                    [
+                        'reading' =>
+                            [
+                            ],
+                    ],
+                'content' => 'paragraph content',
+                'migrated' => '1',
+                'componentVisibility' =>
+                    [
+                        'mobile' => '1',
+                        'desktop' => '1',
+                    ],
+            ],
+    ],
 ]);
 
 /** @var $page \Magento\Cms\Model\Page */

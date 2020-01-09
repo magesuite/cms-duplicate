@@ -25,8 +25,7 @@ class Form extends \Magento\Backend\App\Action
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\View\LayoutFactory $layoutFactory,
         \Magento\Framework\Controller\Result\RawFactory $resultRawFactory
-    )
-    {
+    ) {
         parent::__construct($context);
 
         $this->resultRawFactory = $resultRawFactory;

@@ -29,8 +29,7 @@ class Duplicate extends \Magento\Backend\App\Action
         \MageSuite\CmsDuplicate\Service\PageDuplicator $pageDuplicator,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
         \Magento\Framework\App\ResourceConnection $resourceConnection
-    )
-    {
+    ) {
         parent::__construct($context);
 
         $this->pageDuplicator = $pageDuplicator;

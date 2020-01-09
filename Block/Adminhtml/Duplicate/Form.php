@@ -32,8 +32,7 @@ class Form extends \Magento\Backend\Block\Template
         \MageSuite\ContentConstructorAdmin\Repository\Xml\XmlToComponentConfigurationMapper $xmlToComponentConfigurationMapper,
         \Magento\Cms\Api\BlockRepositoryInterface $blockRepository,
         array $data = []
-    )
-    {
+    ) {
         parent::__construct($context, $data);
 
         $this->pageRepository = $pageRepository;
@@ -45,8 +44,9 @@ class Form extends \Magento\Backend\Block\Template
      * @return \Magento\Cms\Api\Data\PageInterface|\Magento\Cms\Model\Page
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function getPage() {
-        if(!$this->cmsPage) {
+    public function getPage()
+    {
+        if (!$this->cmsPage) {
             $pageId = $this->getRequest()->get('page_id');
 
             $this->cmsPage = $this->pageRepository->getById($pageId);
@@ -55,7 +55,8 @@ class Form extends \Magento\Backend\Block\Template
         return $this->cmsPage;
     }
 
-    public function getBlocksToDuplicate() {
+    public function getBlocksToDuplicate()
+    {
         $page = $this->getPage();
 
         $layoutXml = $page->getLayoutUpdateXml();
@@ -64,8 +65,12 @@ class Form extends \Magento\Backend\Block\Template
 
         $blocks = [];
 
-        foreach($components as $component) {
-            if(!in_array($component['type'], ['paragraph','static-cms-block'])) {
+        foreach ($components as $component) {
+            if (!in_array($component['type'], ['paragraph','static-cms-block'])) {
+                continue;
+            }
+
+            if ($this->isMigratedParagraph($component)) {
                 continue;
             }
 
@@ -77,11 +82,11 @@ class Form extends \Magento\Backend\Block\Template
         return $blocks;
     }
 
-    protected function getBlockData($componentConfiguration) {
-        if($componentConfiguration['type'] == 'paragraph') {
+    protected function getBlockData($componentConfiguration)
+    {
+        if ($componentConfiguration['type'] == 'paragraph') {
             $blockId = $componentConfiguration['data']['blockId'];
-        }
-        else if($componentConfiguration['type'] == 'static-cms-block') {
+        } elseif ($componentConfiguration['type'] == 'static-cms-block') {
             $blockId = $componentConfiguration['data']['identifier'];
         }
 
@@ -95,4 +100,8 @@ class Form extends \Magento\Backend\Block\Template
         ];
     }
 
+    protected function isMigratedParagraph($component)
+    {
+        return $component['type'] == 'paragraph' && !isset($component['data']['blockId']);
+    }
 }

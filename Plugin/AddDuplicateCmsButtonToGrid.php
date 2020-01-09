@@ -44,7 +44,8 @@ class AddDuplicateCmsButtonToGrid
         return $result;
     }
 
-    protected function quoteValue($value) {
+    protected function quoteValue($value)
+    {
         return sprintf("'%s'", $value);
     }
 }

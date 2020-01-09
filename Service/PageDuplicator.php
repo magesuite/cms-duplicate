@@ -29,15 +29,15 @@ class PageDuplicator
         \Magento\Cms\Api\BlockRepositoryInterface $blockRepository,
         \MageSuite\ContentConstructorAdmin\Repository\Xml\XmlToComponentConfigurationMapper $xmlToComponentConfigurationMapper,
         \MageSuite\ContentConstructorAdmin\Repository\Xml\ComponentConfigurationToXmlMapper $componentConfigurationToXmlMapper
-    )
-    {
+    ) {
         $this->pageRepository = $pageRepository;
         $this->blockRepository = $blockRepository;
         $this->xmlToComponentConfigurationMapper = $xmlToComponentConfigurationMapper;
         $this->componentConfigurationToXmlMapper = $componentConfigurationToXmlMapper;
     }
 
-    public function duplicate($oldPageId, $newTitle, $newIdentifier, $blocksData = []) {
+    public function duplicate($oldPageId, $newTitle, $newIdentifier, $blocksData = [])
+    {
         $oldPage = $this->pageRepository->getById($oldPageId);
 
         $duplicatedPage = clone $oldPage;
@@ -46,7 +46,7 @@ class PageDuplicator
         $duplicatedPage->setIdentifier($newIdentifier);
         $duplicatedPage->setTitle($newTitle);
 
-        if(!empty($blocksData)) {
+        if (!empty($blocksData)) {
             $duplicatedBlocks = $this->duplicateBlocks($blocksData);
 
             $this->assignDuplicatedBlocksToComponents($duplicatedBlocks, $duplicatedPage);
@@ -66,7 +66,7 @@ class PageDuplicator
     {
         $this->validateIfNewBlocksIdentifiersDoesNotExist($blocks);
 
-        foreach($blocks as &$block) {
+        foreach ($blocks as &$block) {
             $blockEntity = $this->blockRepository->getById($block['blockId']);
 
             $blockEntity->setId(null);
@@ -113,11 +113,12 @@ class PageDuplicator
      * @param $blocksData
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function validateIfNewBlocksIdentifiersDoesNotExist($blocksData) {
-        foreach($blocksData as $block) {
+    public function validateIfNewBlocksIdentifiersDoesNotExist($blocksData)
+    {
+        foreach ($blocksData as $block) {
             $blockIdentifier = $block['blockIdentifier'];
 
-            if(!$this->blockExist($blockIdentifier)) {
+            if (!$this->blockExist($blockIdentifier)) {
                 continue;
             }
 
@@ -125,13 +126,13 @@ class PageDuplicator
         }
     }
 
-    public function blockExist($blockIdentifier) {
+    public function blockExist($blockIdentifier)
+    {
         try {
             $this->blockRepository->getById($blockIdentifier);
 
             return true;
-        }
-        catch(\Magento\Framework\Exception\NoSuchEntityException $noSuchEntityException) {
+        } catch (\Magento\Framework\Exception\NoSuchEntityException $noSuchEntityException) {
             return false;
         }
     }
