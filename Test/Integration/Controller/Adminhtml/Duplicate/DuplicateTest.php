@@ -19,7 +19,7 @@ class DuplicateTest extends \Magento\TestFramework\TestCase\AbstractBackendContr
      */
     protected $page;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
         $this->messageManager = $this->objectManager->get(\Magento\Framework\Message\ManagerInterface::class);
