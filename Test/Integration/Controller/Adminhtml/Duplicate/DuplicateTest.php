@@ -19,7 +19,7 @@ class DuplicateTest extends \Magento\TestFramework\TestCase\AbstractBackendContr
      */
     protected $page;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
         $this->messageManager = $this->objectManager->get(\Magento\Framework\Message\ManagerInterface::class);
@@ -87,8 +87,10 @@ class DuplicateTest extends \Magento\TestFramework\TestCase\AbstractBackendContr
 
         $content = json_decode($this->getResponse()->getBody(), true);
 
+        $assertContains = method_exists($this, 'assertStringContainsString') ? 'assertStringContainsString' : 'assertContains';
+
         $this->assertFalse($content['success']);
-        $this->assertContains('URL key for specified store already exists', $content['errorMessage']);
+        $this->$assertContains('URL key for specified store already exists', $content['errorMessage']);
     }
 
     /**
