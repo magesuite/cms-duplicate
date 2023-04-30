@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:MageSuite_Changelog:etc/changelog.xsd">
+    <module
+        id="MageSuite_CmsDuplicate"
+        name="MageSuite_CmsDuplicate"
+        url="https://github.com/magesuite/cms-duplicate">
+        <changelog>
+            <tag version="2.0.6" date="2023-05-04">
+                <entry>
+                    <type>FIX</type>
+                    <overview>Update deprecatad Jquery syntax</overview>
+                    <ticket_id>MGS-5142</ticket_id>
+                </entry>
+            </tag>
+        </changelog>
+    </module>
+</config>
