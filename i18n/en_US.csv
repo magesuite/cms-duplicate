@@ -1,0 +1,10 @@
+Duplicate,Duplicate
+"Block with identifier %1 already exist","Block with identifier %1 already exist"
+"New page identifier","New page identifier"
+"Please provide new identifier (url key) for duplicated page. New identifier must be unique and cannot be used already by any other page.","Please provide new identifier (url key) for duplicated page. New identifier must be unique and cannot be used already by any other page."
+"New page title","New page title"
+"Please provide new title for duplicated page. Title does not have to be unique.","Please provide new title for duplicated page. Title does not have to be unique."
+"Static Blocks and Paragraphs","Static Blocks and Paragraphs"
+"Please provide new identifier for duplicated CMS block. New identifier must be unique and cannot be used already by any other CMS block.","Please provide new identifier for duplicated CMS block. New identifier must be unique and cannot be used already by any other CMS block."
+"Duplicate CMS Page","Duplicate CMS Page"
+"New identifier must be different than old one.","New identifier must be different than old one."

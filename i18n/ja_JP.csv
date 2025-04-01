@@ -1,0 +1,10 @@
+Duplicate,複製
+"Block with identifier %1 already exist","%1 の識別子を持つブロックは既に存在しています"
+"New page identifier","新規ページ識別子"
+"Please provide new identifier (url key) for duplicated page. New identifier must be unique and cannot be used already by any other page.","複製先ページの識別子(URLキー)を指定してください。新しい識別子はユニークなものでなければなりません。"
+"New page title","新しいページタイトル"
+"Please provide new title for duplicated page. Title does not have to be unique.","複製先ページのタイトルを指定してください。タイトルはユニークなものでなければなりません。"
+"Static Blocks and Paragraphs","静的ブロックとパラグラフ"
+"Please provide new identifier for duplicated CMS block. New identifier must be unique and cannot be used already by any other CMS block.","複製先ブロックの識別子を指定してください。新しい識別子はユニークなものでなければなりません。"
+"Duplicate CMS Page","CMSページを複製"
+"New identifier must be different than old one.","新しい識別子は古いものと同じものは指定できません。"
