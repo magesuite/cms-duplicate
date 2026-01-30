@@ -1,23 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\CmsDuplicate\Test\Integration\Controller\Adminhtml\Duplicate;
 
 class DuplicateTest extends \Magento\TestFramework\TestCase\AbstractBackendController
 {
-    /**
-     * @var \Magento\TestFramework\ObjectManager
-     */
-    protected $objectManager;
-
-    /**
-     * @var \Magento\Framework\Message\ManagerInterface
-     */
-    protected $messageManager;
-
-    /**
-     * @var \Magento\Cms\Api\Data\PageInterface
-     */
-    protected $page;
+    protected ?\Magento\TestFramework\ObjectManager $objectManager;
+    protected ?\Magento\Framework\Message\ManagerInterface $messageManager;
+    protected ?\Magento\Cms\Api\Data\PageInterface $page;
 
     public function setUp(): void
     {
@@ -32,9 +23,9 @@ class DuplicateTest extends \Magento\TestFramework\TestCase\AbstractBackendContr
      * @magentoAppIsolation enabled
      * @magentoDbIsolation enabled
      * @magentoAppArea adminhtml
-     * @magentoDataFixture loadPagesWithBlocks
+     * @magentoDataFixture MageSuite_CmsDuplicate::Test/Integration/_files/pages_with_blocks.php
      */
-    public function testItDuplicatesPageWithBlocks()
+    public function testItDuplicatesPageWithBlocks(): void
     {
         $originalFirstBlock = $this->getBlock('block_1');
 
@@ -72,9 +63,9 @@ class DuplicateTest extends \Magento\TestFramework\TestCase\AbstractBackendContr
      * @magentoAppIsolation enabled
      * @magentoDbIsolation enabled
      * @magentoAppArea adminhtml
-     * @magentoDataFixture loadPagesWithBlocks
+     * @magentoDataFixture MageSuite_CmsDuplicate::Test/Integration/_files/pages_with_blocks.php
      */
-    public function testItThrowsErrorWhenIdentifierIsTheSame()
+    public function testItThrowsErrorWhenIdentifierIsTheSame(): void
     {
         $this->getRequest()->setMethod(\Magento\Framework\App\Request\Http::METHOD_POST);
         $this->getRequest()->setPostValue([
@@ -97,9 +88,9 @@ class DuplicateTest extends \Magento\TestFramework\TestCase\AbstractBackendContr
      * @magentoAppIsolation enabled
      * @magentoDbIsolation enabled
      * @magentoAppArea adminhtml
-     * @magentoDataFixture loadPagesWithBlocks
+     * @magentoDataFixture MageSuite_CmsDuplicate::Test/Integration/_files/pages_with_blocks.php
      */
-    public function testItThrowsErrorWhenOldPageDoesNotExist()
+    public function testItThrowsErrorWhenOldPageDoesNotExist(): void
     {
         $this->getRequest()->setMethod(\Magento\Framework\App\Request\Http::METHOD_POST);
         $this->getRequest()->setPostValue([
@@ -123,11 +114,6 @@ class DuplicateTest extends \Magento\TestFramework\TestCase\AbstractBackendContr
         $page = $this->objectManager->get(\Magento\Cms\Model\Page::class);
 
         return $page->load('page100', 'identifier')->getId();
-    }
-
-    public static function loadPagesWithBlocks()
-    {
-        include __DIR__ . '/../../../_files/pages_with_blocks.php';
     }
 
     protected function getBlock($identifier)
