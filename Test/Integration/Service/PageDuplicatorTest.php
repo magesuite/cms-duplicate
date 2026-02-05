@@ -1,23 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\CmsDuplicate\Test\Integration\Service;
 
 class PageDuplicatorTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var \Magento\TestFramework\ObjectManager
-     */
-    protected $objectManager;
-
-    /**
-     * @var \MageSuite\CmsDuplicate\Service\PageDuplicator
-     */
-    protected $pageDuplicator;
-
-    /**
-     * @var \MageSuite\ContentConstructorAdmin\Repository\Xml\XmlToComponentConfigurationMapper
-     */
-    protected $xmlToComponentConfiguration;
+    protected ?\Magento\TestFramework\ObjectManager $objectManager;
+    protected ?\MageSuite\CmsDuplicate\Service\PageDuplicator $pageDuplicator;
+    protected ?\MageSuite\ContentConstructorAdmin\Repository\Xml\XmlToComponentConfigurationMapper $xmlToComponentConfiguration;
 
     public function setUp(): void
     {
@@ -29,9 +20,9 @@ class PageDuplicatorTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @magentoDbIsolation enabled
-     * @magentoDataFixture loadPagesWithBlocks
+     * @magentoDataFixture MageSuite_CmsDuplicate::Test/Integration/_files/pages_with_blocks.php
      */
-    public function testItCorrectlyCopiesDataFromOldToNewPage()
+    public function testItCorrectlyCopiesDataFromOldToNewPage(): void
     {
         $oldPageId = $this->getOriginalPageId();
 
@@ -45,9 +36,9 @@ class PageDuplicatorTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @magentoDbIsolation enabled
-     * @magentoDataFixture loadPagesWithBlocks
+     * @magentoDataFixture MageSuite_CmsDuplicate::Test/Integration/_files/pages_with_blocks.php
      */
-    public function testItThrowsExceptionWhenNewIdentifierAlreadyExist()
+    public function testItThrowsExceptionWhenNewIdentifierAlreadyExist(): void
     {
         try {
             $oldPageId = $this->getOriginalPageId();
@@ -62,10 +53,10 @@ class PageDuplicatorTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @magentoDbIsolation enabled
-     * @magentoDataFixture loadPagesWithBlocks
+     * @magentoDataFixture MageSuite_CmsDuplicate::Test/Integration/_files/pages_with_blocks.php
      * @expectedExceptionMessage CMS Page with id "9999999999" does not exist.
      */
-    public function testItThrowsExceptionWhenOldPageDoesNotExist()
+    public function testItThrowsExceptionWhenOldPageDoesNotExist(): void
     {
         try {
             $oldPageId = 9999999999;
@@ -80,9 +71,9 @@ class PageDuplicatorTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @magentoDbIsolation enabled
-     * @magentoDataFixture loadPagesWithBlocks
+     * @magentoDataFixture MageSuite_CmsDuplicate::Test/Integration/_files/pages_with_blocks.php
      */
-    public function testItDuplicatesBlocks()
+    public function testItDuplicatesBlocks(): void
     {
         $oldPageId = $this->getOriginalPageId();
 
@@ -120,9 +111,9 @@ class PageDuplicatorTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @magentoDbIsolation enabled
-     * @magentoDataFixture loadPagesWithBlocks
+     * @magentoDataFixture MageSuite_CmsDuplicate::Test/Integration/_files/pages_with_blocks.php
      */
-    public function testNewParagraphsAreMigratedAsIs()
+    public function testNewParagraphsAreMigratedAsIs(): void
     {
         $oldPageId = $this->getOriginalPageId();
 
@@ -137,9 +128,9 @@ class PageDuplicatorTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @magentoDbIsolation enabled
-     * @magentoDataFixture loadPagesWithBlocks
+     * @magentoDataFixture MageSuite_CmsDuplicate::Test/Integration/_files/pages_with_blocks.php
      */
-    public function testItDuplicatesOnlyPassedBlocks()
+    public function testItDuplicatesOnlyPassedBlocks(): void
     {
         $oldPageId = $this->getOriginalPageId();
 
@@ -168,9 +159,9 @@ class PageDuplicatorTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @magentoDbIsolation enabled
-     * @magentoDataFixture loadPagesWithBlocks
+     * @magentoDataFixture MageSuite_CmsDuplicate::Test/Integration/_files/pages_with_blocks.php
      */
-    public function testItThrowsExceptionWhenTryingToDuplicateAlreadyExistingBlock()
+    public function testItThrowsExceptionWhenTryingToDuplicateAlreadyExistingBlock(): void
     {
         try {
             $oldPageId = $this->getOriginalPageId();
@@ -206,10 +197,5 @@ class PageDuplicatorTest extends \PHPUnit\Framework\TestCase
         $repository = $this->objectManager->create(\Magento\Cms\Api\BlockRepositoryInterface::class);
 
         return $repository->getById($identifier);
-    }
-
-    public static function loadPagesWithBlocks()
-    {
-        include __DIR__ . '/../_files/pages_with_blocks.php';
     }
 }
