@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\CmsDuplicate\Controller\Adminhtml\Duplicate;
 
-class Form extends \Magento\Backend\App\Action
+class Form extends \Magento\Backend\App\Action implements \Magento\Framework\App\Action\HttpGetActionInterface
 {
-    const ADMIN_RESOURCE = 'Magento_Cms::save';
+    public const ADMIN_RESOURCE = 'Magento_Cms::save';
 
     /**
      * @var \Magento\Framework\Controller\Result\RawFactory
@@ -47,10 +49,5 @@ class Form extends \Magento\Backend\App\Action
         $resultRaw->setContents($block);
 
         return $resultRaw;
-    }
-
-    protected function _isAllowed()
-    {
-        return $this->_authorization->isAllowed(self::ADMIN_RESOURCE);
     }
 }
