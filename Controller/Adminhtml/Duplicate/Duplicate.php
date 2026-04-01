@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\CmsDuplicate\Controller\Adminhtml\Duplicate;
 
-class Duplicate extends \Magento\Backend\App\Action
+class Duplicate extends \Magento\Backend\App\Action implements \Magento\Framework\App\Action\HttpPostActionInterface
 {
-    const ADMIN_RESOURCE = 'Magento_Cms::save';
+    public const ADMIN_RESOURCE = 'Magento_Cms::save';
 
-    const SUCCESS_MESSAGE = 'Page was successfully duplicated. You can edit it by <a href="%1">clicking here</a>.';
-    const ERROR_MESSAGE = 'Error occured while trying to duplicate CMS page: %1';
+    public const SUCCESS_MESSAGE = 'Page was successfully duplicated. You can edit it by <a href="%1">clicking here</a>.';
+    public const ERROR_MESSAGE = 'Error occured while trying to duplicate CMS page: %1';
 
     /**
      * @var \MageSuite\CmsDuplicate\Service\PageDuplicator
@@ -73,11 +75,6 @@ class Duplicate extends \Magento\Backend\App\Action
         }
 
         return $result;
-    }
-
-    protected function _isAllowed()
-    {
-        return $this->_authorization->isAllowed(self::ADMIN_RESOURCE);
     }
 
     /**
